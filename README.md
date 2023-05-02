@@ -1,4 +1,4 @@
-# terraform-google-out-of-band-security
+# Terraform Google Out-of-Band Security
 
 ## Description
 ### Tagline
