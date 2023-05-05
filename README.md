@@ -2,33 +2,17 @@
 
 ## Description
 ### Tagline
-This is an auto-generated module.
+Create a deployment with an Out of Band Security Appliance.
 
 ### Detailed
-This module was generated from [terraform-google-module-template](https://github.com/terraform-google-modules/terraform-google-module-template/), which by default generates a module that simply creates a GCS bucket. As the module develops, this README should be updated.
-
-The resources/services/activations/deletions that this module will create/trigger are:
-
-- Create a GCS bucket with the provided name
+This solution aids in the creation and management of scalable Terraform Deployments of VM-based Third Party Security Appliances which inspect mirrored traffic.
 
 ### PreDeploy
 To deploy this blueprint you must have an active billing account and billing permissions.
 
 ## Architecture
 - [Architecture Diagram](assets/3P_data_plane.png)
-1. Architecture description step no. 1
-2. Architecture description step no. 2
-3. Architecture description step no. N
-
-## Documentation
-- [Hosting a Static Website](https://cloud.google.com/storage/docs/hosting-static-website)
-
-## Deployment Duration
-Configuration: X mins
-Deployment: Y mins
-
-## Cost
-[Blueprint cost details](https://cloud.google.com/products/calculator?id=02fb0c45-cc29-4567-8cc6-f72ac9024add)
+This module will create VM instances inside a Managed Instance Group which will have autoscaling, health checks, backend service and forwarding rule attached. The VM instances will be placed in a new VPC that can be peered with a customer VPC for packet mirroring.
 
 ## Usage
 
@@ -40,7 +24,8 @@ module "out_of_band_security" {
   version = "~> 0.1"
 
   project_id  = "<PROJECT ID>"
-  bucket_name = "gcs-test-bucket"
+  naming_prefix = "example-prefix"
+  source_image = "https://www.exampleapis.com/path_to_img"
 }
 ```
 
@@ -105,7 +90,7 @@ service account with the necessary roles applied.
 A project with the following APIs enabled must be used to host the
 resources of this module:
 
-- Google Cloud Storage JSON API: `storage-api.googleapis.com`
+- Google Cloud Compute JSON API: `compute.googleapis.com`
 
 The [Project Factory module][project-factory-module] can be used to
 provision a project with the necessary APIs enabled.
