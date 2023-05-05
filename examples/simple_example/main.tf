@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
+resource "random_string" "prefix" {
+  length  = 4
+  upper   = false
+  special = false
+}
+
 module "out_of_band_security" {
   source = "../.."
 
-  project_id  = var.project_id
-  bucket_name = var.bucket_name
+  project_id    = var.project_id
+  naming_prefix = "test-prefix-${random_string.prefix.result}"
+  source_image  = "https://www.googleapis.com/compute/v1/projects/cisco-public/global/images/cisco-ftdv-7-1-0-92"
 }

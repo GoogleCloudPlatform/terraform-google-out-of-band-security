@@ -7,14 +7,15 @@ This example illustrates how to use the `out-of-band-security` module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bucket\_name | The name of the bucket to create. | `string` | n/a | yes |
-| project\_id | The ID of the project in which to provision resources. | `string` | n/a | yes |
+| project\_id | project resources will be deployed into | `string` | n/a | yes |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_name | The name of the bucket. |
+| forwarding\_rule | name of the forwarding rule created for traffic |
+| instance\_template | name of the instance template |
+| mig | name of managed instance group created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

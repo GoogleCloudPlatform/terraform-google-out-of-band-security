@@ -15,7 +15,7 @@ The resources/services/activations/deletions that this module will create/trigge
 To deploy this blueprint you must have an active billing account and billing permissions.
 
 ## Architecture
-![alt text for diagram](https://www.link-to-architecture-diagram.com)
+- [Architecture Diagram](assets/3P_data_plane.png)
 1. Architecture description step no. 1
 2. Architecture description step no. 2
 3. Architecture description step no. N
@@ -52,14 +52,29 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| bucket\_name | The name of the bucket to create | `string` | n/a | yes |
-| project\_id | The project ID to deploy to | `string` | n/a | yes |
+| block\_project\_ssh\_keys | Ability for customers to block or allow the use of project-wide ssh keys in their VM. | `bool` | `false` | no |
+| compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
+| cpu\_target | CPU target for autoscaling | `number` | `0.75` | no |
+| create\_public\_management\_ip | Allow the creation of a public IP address for the management interface of each VM. IP will be ephemeral instead of static. | `bool` | `false` | no |
+| machine\_type | type for default compute instances | `string` | `"n1-standard-4"` | no |
+| max\_instances | Max compute instances in the cluster | `number` | `3` | no |
+| mgmt\_network | management vpc name | `string` | `"default"` | no |
+| mgmt\_subnet | Management subnet name | `string` | `"default"` | no |
+| min\_instances | Max compute instances in the cluster | `number` | `2` | no |
+| naming\_prefix | prefix string to be appended in front of all deployed resources so they can be easily traced back to deployment assistant | `string` | n/a | yes |
+| project\_id | project resources will be deployed into | `string` | n/a | yes |
+| region | Region for deployment | `string` | `"us-central1"` | no |
+| source\_image | source image for firewall instance template | `string` | n/a | yes |
+| traffic\_subnet\_cidr | Traffic subnet cidr | `string` | `"10.127.10.0/24"` | no |
+| zones | Zones for deployment as a comma separated string so it can make it through SLM | `list(string)` | <pre>[<br>  "us-central1-a",<br>  "us-central1-b",<br>  "us-central1-c"<br>]</pre> | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| bucket\_name | Name of the bucket |
+| forwarding\_rule | name of the forwarding rule created for traffic |
+| instance\_template | name of the instance template |
+| mig | name of managed instance group created |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

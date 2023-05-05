@@ -12,28 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package multiple_buckets
+package simple_example
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/gcloud"
 	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/tft"
-	"github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test/pkg/utils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSimpleExample(t *testing.T) {
 	example := tft.NewTFBlueprintTest(t)
-
+	projectID := example.GetTFSetupStringOutput("project_id")
+	prefix := "test-prefix"
+	machine_type := "n1-standard-4"
 	example.DefineVerify(func(assert *assert.Assertions) {
 		example.DefaultVerify(assert)
-
-		projectID := example.GetStringOutput("project_id")
-		services := gcloud.Run(t, "services list", gcloud.WithCommonArgs([]string{"--project", projectID, "--format", "json"})).Array()
-
-		match := utils.GetFirstMatchResult(t, services, "config.name", "storage.googleapis.com")
-		assert.Equal("ENABLED", match.Get("state").String(), "storage service should be enabled")
+		op1 := gcloud.Run(t, fmt.Sprintf("compute instance-groups managed describe %s --project %s --region us-central1", example.GetStringOutput("mig"), projectID))
+		assert.Contains(op1.Get("baseInstanceName").String(), "test-prefix", "mig with the template instances created")
+		op2 := gcloud.Run(t, fmt.Sprintf("compute forwarding-rules describe %s --project %s --region us-central1", example.GetStringOutput("forwarding_rule"), projectID))
+		assert.Contains(op2.Get("network").String(), prefix, "forwarding rule network verified")
+		assert.Contains(op2.Get("subnetwork").String(), prefix, "forwarding rule subnet verified")
+		op3 := gcloud.Run(t, fmt.Sprintf("compute instance-templates describe %s --project %s", example.GetStringOutput("instance_template"), projectID))
+		assert.Contains(op3.Get("properties.machineType").String(), machine_type, "instance template with given machine type created")
 	})
 	example.Test()
 }

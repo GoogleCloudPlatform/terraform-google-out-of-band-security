@@ -14,7 +14,17 @@
  * limitations under the License.
  */
 
-output "bucket_name" {
-  description = "The name of the bucket."
-  value       = module.out_of_band_security.bucket_name
+output "mig" {
+  description = "name of managed instance group created"
+  value       = module.out_of_band_security.mig
+}
+
+output "forwarding_rule" {
+  description = "name of the forwarding rule created for traffic"
+  value       = module.out_of_band_security.forwarding_rule
+}
+
+output "instance_template" {
+  description = "name of the instance template"
+  value       = module.out_of_band_security.instance_template
 }

@@ -14,8 +14,198 @@
  * limitations under the License.
  */
 
-resource "google_storage_bucket" "main" {
+provider "google" {
+  project = var.project_id
+}
+
+provider "google-beta" {
+  project = var.project_id
+}
+
+# -------------------------------------------------------------- #
+# INSTANCE-TEMPLATE
+# -------------------------------------------------------------- #
+resource "google_compute_instance_template" "main" {
+  provider = google
   project  = var.project_id
-  name     = var.bucket_name
-  location = "US"
+
+  name_prefix    = format("%s-template", var.naming_prefix)
+  can_ip_forward = true
+  description    = format("%s instance template", var.naming_prefix)
+  region         = var.region
+  machine_type   = var.machine_type
+  labels         = { deployment = var.naming_prefix }
+
+  disk {
+    source_image = var.source_image
+    auto_delete  = true
+    boot         = true
+  }
+
+  network_interface {
+    network            = google_compute_network.traffic.name
+    subnetwork         = google_compute_subnetwork.traffic.id
+    subnetwork_project = var.project_id
+  }
+
+  network_interface {
+    network            = data.google_compute_network.mgmt.id
+    subnetwork         = data.google_compute_subnetwork.mgmt.id
+    subnetwork_project = var.project_id
+
+    # A Dynamic block that keys off of the public ip boolean to create an ephemeral public ip address.
+    dynamic "access_config" {
+      for_each = var.create_public_management_ip == true ? [var.create_public_management_ip] : []
+      content {}
+    }
+  }
+
+  metadata = merge(tomap({
+    block-project-ssh-keys = var.block_project_ssh_keys
+    serial-port-enable     = true
+    }),
+    var.compute_instance_metadata
+  )
+
+  scheduling {
+    automatic_restart = false
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+# -------------------------------------------------------------- #
+# MANAGED-INSTANCE_GROUP
+# -------------------------------------------------------------- #
+resource "google_compute_region_instance_group_manager" "main" {
+  provider                  = google-beta
+  name                      = format("%s-mig", var.naming_prefix)
+  project                   = var.project_id
+  region                    = var.region
+  distribution_policy_zones = var.zones
+  base_instance_name        = format("%s-instance", var.naming_prefix)
+
+  all_instances_config {
+    labels = { deployment = var.naming_prefix }
+  }
+
+  version {
+    instance_template = google_compute_instance_template.main.id
+  }
+
+  update_policy {
+    minimal_action  = "REPLACE"
+    type            = "PROACTIVE"
+    max_surge_fixed = length(var.zones)
+    min_ready_sec   = 600
+  }
+
+  depends_on = [google_compute_instance_template.main]
+
+}
+
+# -------------------------------------------------------------- #
+# AUTO-SCALER
+# -------------------------------------------------------------- #
+
+resource "google_compute_region_autoscaler" "main" {
+  provider = google
+  name     = format("%s-autoscaler", var.naming_prefix)
+  project  = var.project_id
+  region   = var.region
+  target   = google_compute_region_instance_group_manager.main.id
+
+  autoscaling_policy {
+    min_replicas    = var.min_instances
+    max_replicas    = var.max_instances
+    cooldown_period = 240
+
+    cpu_utilization {
+      target = var.cpu_target
+    }
+  }
+
+  depends_on = [google_compute_region_instance_group_manager.main]
+}
+
+# -------------------------------------------------------------- #
+# FORWARDING-RULE
+# -------------------------------------------------------------- #
+
+resource "google_compute_forwarding_rule" "main" {
+  provider = google-beta
+  name     = format("%s-forwarding-rule", var.naming_prefix)
+  project  = var.project_id
+  region   = var.region
+  labels   = { deployment = var.naming_prefix }
+
+  is_mirroring_collector = true
+  load_balancing_scheme  = "INTERNAL"
+  backend_service        = google_compute_region_backend_service.main.id
+  all_ports              = true
+
+  network    = google_compute_network.traffic.id
+  subnetwork = google_compute_subnetwork.traffic.id
+}
+
+# -------------------------------------------------------------- #
+# INTERNAL-LOAD-BALANCER
+# -------------------------------------------------------------- #
+resource "google_compute_region_backend_service" "main" {
+  provider      = google
+  name          = format("%s-backend", var.naming_prefix)
+  project       = var.project_id
+  region        = var.region
+  health_checks = [google_compute_health_check.hc.id]
+
+  backend {
+    group = google_compute_region_instance_group_manager.main.instance_group
+  }
+}
+
+# -------------------------------------------------------------- #
+# HEALTH-CHECK
+# -------------------------------------------------------------- #
+resource "google_compute_health_check" "hc" {
+  provider = google
+  name     = format("%s-health-check-%s", var.naming_prefix, var.region)
+  project  = var.project_id
+
+  check_interval_sec = 3
+  timeout_sec        = 2
+  tcp_health_check {
+    port = "80"
+  }
+}
+
+# -------------------------------------------------------------- #
+# VPC NETWORKS
+# -------------------------------------------------------------- #
+data "google_compute_network" "mgmt" {
+  project = var.project_id
+  name    = var.mgmt_network
+}
+
+data "google_compute_subnetwork" "mgmt" {
+  project = var.project_id
+  name    = var.mgmt_subnet
+  region  = var.region
+}
+
+resource "google_compute_network" "traffic" {
+  provider                = google
+  name                    = format("%s-traffic-%s", var.naming_prefix, var.region)
+  project                 = var.project_id
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "traffic" {
+  provider      = google
+  name          = format("%s-traffic-subnet", var.naming_prefix)
+  project       = var.project_id
+  region        = var.region
+  network       = google_compute_network.traffic.name
+  ip_cidr_range = var.traffic_subnet_cidr
 }

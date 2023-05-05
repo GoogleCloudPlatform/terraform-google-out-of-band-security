@@ -14,11 +14,27 @@
  * limitations under the License.
  */
 
+resource "google_compute_network" "default" {
+  provider                = google
+  name                    = "default"
+  project                 = module.project.project_id
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "default" {
+  provider      = google
+  name          = "default"
+  project       = module.project.project_id
+  region        = "us-central1"
+  network       = google_compute_network.default.name
+  ip_cidr_range = "192.168.10.0/24"
+}
+
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
   version = "~> 14.0"
 
-  name              = "ci-out-of-band-security"
+  name              = "out-of-band-security"
   random_project_id = "true"
   org_id            = var.org_id
   folder_id         = var.folder_id
@@ -26,7 +42,7 @@ module "project" {
 
   activate_apis = [
     "cloudresourcemanager.googleapis.com",
-    "storage-api.googleapis.com",
-    "serviceusage.googleapis.com"
+    "serviceusage.googleapis.com",
+    "compute.googleapis.com"
   ]
 }
