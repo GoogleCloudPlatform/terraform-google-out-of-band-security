@@ -20,73 +20,72 @@
 
 variable "project_id" {
   type        = string
-  description = "project resources will be deployed into"
+  description = "Project the resources will be deployed into."
 }
 
 variable "naming_prefix" {
   type        = string
-  description = "prefix string to be appended in front of all deployed resources so they can be easily traced back to deployment assistant"
+  description = "A prefix string to be appended in front of all deployed resources so they can be easily traced back."
 }
 
 variable "source_image" {
   type        = string
-  description = "source image for firewall instance template"
-  default     = "projects/centos-cloud/global/images/centos-stream-8-v20230509"
+  description = "Source image url path for the security appliance being deployed."
 }
 
 variable "region" {
   type        = string
   default     = "us-central1"
-  description = "Region for deployment"
+  description = "The GCP Region for deployment."
 }
 
 variable "zones" {
   type        = list(string)
   default     = ["us-central1-a", "us-central1-b", "us-central1-c"]
-  description = "Zones for deployment as a comma separated string so it can make it through SLM"
+  description = "List of GCP Zones for deployment."
 }
 
 variable "traffic_subnet_cidr" {
   type        = string
   default     = "10.127.10.0/24"
-  description = "Traffic subnet cidr"
+  description = "CIDR range of the subnet where the firewall VMs are inspecting traffic. This VPC will need to be peered to existing VPC's for packet-mirroring, so ensure it is a unique range for your organization."
 }
 
 variable "mgmt_network" {
   type = string
 
   default     = "default"
-  description = "management vpc name"
+  description = "The name of an existing VPC that will be used for the management interface of the deployed firewall VMs."
 }
 
 variable "mgmt_subnet" {
   type        = string
   default     = "default"
-  description = "Management subnet name"
+  description = "The name of an existing subnet within this VPC (and available for every chosen zone) that will be used for the management interface of the deployed firewall VMs."
 }
 
 variable "machine_type" {
   type        = string
   default     = "n1-standard-4"
-  description = "type for default compute instances"
+  description = "The machine type for the firewall compute instances."
 }
 
 variable "min_instances" {
   type        = number
   default     = 2
-  description = "Max compute instances in the cluster"
+  description = "Minimum compute instances in the cluster."
 }
 
 variable "max_instances" {
   type        = number
   default     = 3
-  description = "Max compute instances in the cluster"
+  description = "Maximum compute instances in the cluster."
 }
 
 variable "cpu_target" {
   type        = number
   default     = 0.75
-  description = "CPU target for autoscaling"
+  description = "CPU target for autoscaling."
 }
 
 variable "compute_instance_metadata" {

@@ -109,7 +109,6 @@ resource "google_compute_region_instance_group_manager" "main" {
 # -------------------------------------------------------------- #
 # AUTO-SCALER
 # -------------------------------------------------------------- #
-
 resource "google_compute_region_autoscaler" "main" {
   provider = google
   name     = format("%s-autoscaler", var.naming_prefix)
@@ -133,7 +132,6 @@ resource "google_compute_region_autoscaler" "main" {
 # -------------------------------------------------------------- #
 # FORWARDING-RULE
 # -------------------------------------------------------------- #
-
 resource "google_compute_forwarding_rule" "main" {
   provider = google-beta
   name     = format("%s-forwarding-rule", var.naming_prefix)

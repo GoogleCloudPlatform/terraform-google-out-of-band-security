@@ -25,4 +25,5 @@ module "out_of_band_security" {
 
   project_id    = var.project_id
   naming_prefix = "test-prefix-${random_string.prefix.result}"
+  source_image  = "projects/centos-cloud/global/images/centos-stream-8-v20230509"
 }
