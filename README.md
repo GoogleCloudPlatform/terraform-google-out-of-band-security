@@ -39,19 +39,19 @@ Functional examples are included in the
 |------|-------------|------|---------|:--------:|
 | block\_project\_ssh\_keys | Ability for customers to block or allow the use of project-wide ssh keys in their VM. | `bool` | `false` | no |
 | compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
-| cpu\_target | CPU target for autoscaling | `number` | `0.75` | no |
+| cpu\_target | CPU target for autoscaling. | `number` | `0.75` | no |
 | create\_public\_management\_ip | Allow the creation of a public IP address for the management interface of each VM. IP will be ephemeral instead of static. | `bool` | `false` | no |
-| machine\_type | type for default compute instances | `string` | `"n1-standard-4"` | no |
-| max\_instances | Max compute instances in the cluster | `number` | `3` | no |
-| mgmt\_network | management vpc name | `string` | `"default"` | no |
-| mgmt\_subnet | Management subnet name | `string` | `"default"` | no |
-| min\_instances | Max compute instances in the cluster | `number` | `2` | no |
-| naming\_prefix | prefix string to be appended in front of all deployed resources so they can be easily traced back to deployment assistant | `string` | n/a | yes |
-| project\_id | project resources will be deployed into | `string` | n/a | yes |
-| region | Region for deployment | `string` | `"us-central1"` | no |
-| source\_image | source image for firewall instance template | `string` | `"projects/centos-cloud/global/images/centos-stream-8-v20230509"` | no |
-| traffic\_subnet\_cidr | Traffic subnet cidr | `string` | `"10.127.10.0/24"` | no |
-| zones | Zones for deployment as a comma separated string so it can make it through SLM | `list(string)` | <pre>[<br>  "us-central1-a",<br>  "us-central1-b",<br>  "us-central1-c"<br>]</pre> | no |
+| machine\_type | The machine type for the firewall compute instances. | `string` | `"n1-standard-4"` | no |
+| max\_instances | Maximum compute instances in the cluster. | `number` | `3` | no |
+| mgmt\_network | The name of an existing VPC that will be used for the management interface of the deployed firewall VMs. | `string` | `"default"` | no |
+| mgmt\_subnet | The name of an existing subnet within this VPC (and available for every chosen zone) that will be used for the management interface of the deployed firewall VMs. | `string` | `"default"` | no |
+| min\_instances | Minimum compute instances in the cluster. | `number` | `2` | no |
+| naming\_prefix | A prefix string to be appended in front of all deployed resources so they can be easily traced back. | `string` | n/a | yes |
+| project\_id | Project the resources will be deployed into. | `string` | n/a | yes |
+| region | The GCP Region for deployment. | `string` | `"us-central1"` | no |
+| source\_image | Source image url path for the security appliance being deployed. | `string` | n/a | yes |
+| traffic\_subnet\_cidr | CIDR range of the subnet where the firewall VMs are inspecting traffic. This VPC will need to be peered to existing VPC's for packet-mirroring, so ensure it is a unique range for your organization. | `string` | `"10.127.10.0/24"` | no |
+| zones | List of GCP Zones for deployment. | `list(string)` | <pre>[<br>  "us-central1-a",<br>  "us-central1-b",<br>  "us-central1-c"<br>]</pre> | no |
 
 ## Outputs
 
