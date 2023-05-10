@@ -31,14 +31,8 @@ variable "naming_prefix" {
 variable "source_image" {
   type        = string
   description = "source image for firewall instance template"
+  default     = "projects/centos-cloud/global/images/centos-stream-8-v20230509"
 }
-# Fortinet test: "https://www.googleapis.com/compute/v1/projects/fortigcp-project-001/global/images/fortinet-fgtondemand-703-20211208-001-w-license"
-
-# Palo Alto Test: "https://www.googleapis.com/compute/v1/projects/paloaltonetworksgcp-public/global/images/vmseries-flex-byol-913"
-
-# Cisco Test: "https://www.googleapis.com/compute/v1/projects/cisco-public/global/images/cisco-ftdv-7-1-0-92"
-
-# Corelight Test: "projects/zeekautomation/global/images/zeek-fluentd-golden-image-v1"
 
 variable "region" {
   type        = string

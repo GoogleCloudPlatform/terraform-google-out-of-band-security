@@ -25,5 +25,4 @@ module "out_of_band_security" {
 
   project_id    = var.project_id
   naming_prefix = "test-prefix-${random_string.prefix.result}"
-  source_image  = "https://www.googleapis.com/compute/v1/projects/cisco-public/global/images/cisco-ftdv-7-1-0-92"
 }

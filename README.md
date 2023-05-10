@@ -49,7 +49,7 @@ Functional examples are included in the
 | naming\_prefix | prefix string to be appended in front of all deployed resources so they can be easily traced back to deployment assistant | `string` | n/a | yes |
 | project\_id | project resources will be deployed into | `string` | n/a | yes |
 | region | Region for deployment | `string` | `"us-central1"` | no |
-| source\_image | source image for firewall instance template | `string` | n/a | yes |
+| source\_image | source image for firewall instance template | `string` | `"projects/centos-cloud/global/images/centos-stream-8-v20230509"` | no |
 | traffic\_subnet\_cidr | Traffic subnet cidr | `string` | `"10.127.10.0/24"` | no |
 | zones | Zones for deployment as a comma separated string so it can make it through SLM | `list(string)` | <pre>[<br>  "us-central1-a",<br>  "us-central1-b",<br>  "us-central1-c"<br>]</pre> | no |
 
