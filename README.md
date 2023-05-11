@@ -57,9 +57,9 @@ Functional examples are included in the
 
 | Name | Description |
 |------|-------------|
-| forwarding\_rule | name of the forwarding rule created for traffic |
-| instance\_template | name of the instance template |
-| mig | name of managed instance group created |
+| forwarding\_rule | Name of the forwarding rule created for traffic. |
+| instance\_template | Name of the instance template. |
+| mig | Name of managed instance group created. |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
