@@ -15,16 +15,16 @@
  */
 
 output "mig" {
-  description = "name of managed instance group created"
+  description = "Name of managed instance group created."
   value       = google_compute_region_instance_group_manager.main.name
 }
 
 output "forwarding_rule" {
-  description = "name of the forwarding rule created for traffic"
+  description = "Name of the forwarding rule created for traffic."
   value       = google_compute_forwarding_rule.main.name
 }
 
 output "instance_template" {
-  description = "name of the instance template"
+  description = "Name of the instance template."
   value       = google_compute_instance_template.main.name
 }
