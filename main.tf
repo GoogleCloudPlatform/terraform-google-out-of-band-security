@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 
-provider "google" {
-  project = var.project_id
-}
-
-provider "google-beta" {
-  project = var.project_id
-}
-
 # -------------------------------------------------------------- #
 # INSTANCE-TEMPLATE
 # -------------------------------------------------------------- #
@@ -101,9 +93,6 @@ resource "google_compute_region_instance_group_manager" "main" {
     max_surge_fixed = length(var.zones)
     min_ready_sec   = 600
   }
-
-  depends_on = [google_compute_instance_template.main]
-
 }
 
 # -------------------------------------------------------------- #
@@ -125,8 +114,6 @@ resource "google_compute_region_autoscaler" "main" {
       target = var.cpu_target
     }
   }
-
-  depends_on = [google_compute_region_instance_group_manager.main]
 }
 
 # -------------------------------------------------------------- #
