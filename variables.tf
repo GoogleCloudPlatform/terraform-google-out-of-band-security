@@ -105,3 +105,19 @@ variable "create_public_management_ip" {
   default     = false
   description = "Allow the creation of a public IP address for the management interface of each VM. IP will be ephemeral instead of static."
 }
+
+variable "scopes" {
+  type        = list(string)
+  default     = []
+  description = "The list of access scopes for the service account attached to the VM."
+}
+
+variable "additional_disks" {
+  type = map(object({
+    disk_size = number
+    disk_type = string
+  }))
+  default     = {}
+  description = "Allow the creation of a persistent disk for each instance."
+}
+

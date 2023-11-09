@@ -66,6 +66,41 @@ resource "google_compute_instance_template" "main" {
   lifecycle {
     create_before_destroy = true
   }
+
+  # A Dynamic disk block that keys off of the additional_disks variable containing details of each additional needed by the customer.
+  dynamic "disk" {
+    for_each = var.additional_disks
+    content {
+      source      = google_compute_disk.default["${disk.key}.${local.zone}"].name
+      auto_delete = false
+    }
+  }
+
+  service_account {
+    scopes = var.scopes
+  }
+}
+
+# -------------------------------------------------------------- #
+# LOCAL VARIABLES
+# -------------------------------------------------------------- #
+locals {
+  additional_disk_per_zone = distinct(flatten([
+    for zone in var.zones : [
+      for k, v in var.additional_disks : {
+        disk_key  = k
+        disk_size = v["disk_size"]
+        disk_type = v["disk_type"]
+        zone      = zone
+      }
+    ]
+  ]))
+
+  # additional disks will be usable in every zone.
+  # setting one zone as the key just to assign the source for the instance template disk.
+  zone = "${var.region}-a"
+
+  additional_disk_map = { for entry in local.additional_disk_per_zone : "${entry.disk_key}.${entry.zone}" => entry }
 }
 
 # -------------------------------------------------------------- #
@@ -194,3 +229,16 @@ resource "google_compute_subnetwork" "traffic" {
   network       = google_compute_network.traffic.name
   ip_cidr_range = var.traffic_subnet_cidr
 }
+
+# -------------------------------------------------------------- #
+# PERSISTENT DISK
+# -------------------------------------------------------------- #
+resource "google_compute_disk" "default" {
+  for_each = local.additional_disk_map
+  name     = format("%s-persistent-disk", var.naming_prefix)
+  project  = var.project_id
+  size     = each.value.disk_size
+  type     = each.value.disk_type
+  zone     = each.value.zone
+}
+

@@ -37,6 +37,7 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| additional\_disks | Allow the creation of a persistent disk for each instance. | <pre>map(object({<br>    disk_size = number<br>    disk_type = string<br>  }))</pre> | `{}` | no |
 | block\_project\_ssh\_keys | Ability for customers to block or allow the use of project-wide ssh keys in their VM. | `bool` | `false` | no |
 | compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
 | cpu\_target | CPU target for autoscaling. | `number` | `0.75` | no |
@@ -49,6 +50,7 @@ Functional examples are included in the
 | naming\_prefix | A prefix string to be appended in front of all deployed resources so they can be easily traced back. | `string` | n/a | yes |
 | project\_id | Project the resources will be deployed into. | `string` | n/a | yes |
 | region | The GCP Region for deployment. | `string` | `"us-central1"` | no |
+| scopes | The list of access scopes for the service account attached to the VM. | `list(string)` | `[]` | no |
 | source\_image | Source image url path for the security appliance being deployed. | `string` | n/a | yes |
 | traffic\_subnet\_cidr | CIDR range of the subnet where the firewall VMs are inspecting traffic. This VPC will need to be peered to existing VPC's for packet-mirroring, so ensure it is a unique range for your organization. | `string` | `"10.127.10.0/24"` | no |
 | zones | List of GCP Zones for deployment. | `list(string)` | <pre>[<br>  "us-central1-a",<br>  "us-central1-b",<br>  "us-central1-c"<br>]</pre> | no |
