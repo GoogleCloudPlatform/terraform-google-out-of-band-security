@@ -98,7 +98,7 @@ locals {
 
   # additional disks will be usable in every zone.
   # setting one zone as the key just to assign the source for the instance template disk.
-  zone = "${var.region}-a"
+  zone = var.zones[0]
 
   additional_disk_map = { for entry in local.additional_disk_per_zone : "${entry.disk_key}.${entry.zone}" => entry }
 }
@@ -235,7 +235,7 @@ resource "google_compute_subnetwork" "traffic" {
 # -------------------------------------------------------------- #
 resource "google_compute_disk" "default" {
   for_each = local.additional_disk_map
-  name     = format("%s-persistent-disk", var.naming_prefix)
+  name     = format("%s-%s-disk", var.naming_prefix, each.value.disk_key)
   project  = var.project_id
   size     = each.value.disk_size
   type     = each.value.disk_type
