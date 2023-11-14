@@ -118,6 +118,6 @@ variable "additional_disks" {
     disk_type = string
   }))
   default     = {}
-  description = "Allow the creation of a persistent disk for each instance."
+  description = "Allow the creation of one or more persistent disks for each instance."
 }
 

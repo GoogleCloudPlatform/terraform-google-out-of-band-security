@@ -37,7 +37,7 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| additional\_disks | Allow the creation of a persistent disk for each instance. | <pre>map(object({<br>    disk_size = number<br>    disk_type = string<br>  }))</pre> | `{}` | no |
+| additional\_disks | Allow the creation of one or more persistent disks for each instance. | <pre>map(object({<br>    disk_size = number<br>    disk_type = string<br>  }))</pre> | `{}` | no |
 | block\_project\_ssh\_keys | Ability for customers to block or allow the use of project-wide ssh keys in their VM. | `bool` | `false` | no |
 | compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
 | cpu\_target | CPU target for autoscaling. | `number` | `0.75` | no |
