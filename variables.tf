@@ -113,11 +113,8 @@ variable "scopes" {
 }
 
 variable "additional_disks" {
-  type = map(object({
-    disk_size = number
-    disk_type = string
-  }))
+  type        = map(any)
   default     = {}
-  description = "Allow the creation of one or more persistent disks for each instance."
+  description = "Allow the creation of one or more additional persistent disks for the VM instance."
 }
 
