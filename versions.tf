@@ -32,6 +32,6 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/terraform-google-out-of-band-security/v0.1.1"
+    module_name = "blueprints/terraform/terraform-google-out-of-band-security/v0.1.2"
   }
 }
