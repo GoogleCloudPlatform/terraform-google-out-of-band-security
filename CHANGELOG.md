@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.1.3](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.1.2...v0.1.3) (2023-11-16)
+
+
+### Bug Fixes
+
+* changed the data type of additional disk from map(object) to jus… ([#10](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/issues/10)) ([cd9b45f](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/commit/cd9b45f12235c08680c12fdf03bef8a2d204bac5))
+
 ## [0.1.2](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.1.1...v0.1.2) (2023-11-14)
 
 
