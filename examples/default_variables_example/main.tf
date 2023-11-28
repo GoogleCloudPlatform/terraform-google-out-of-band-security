@@ -27,9 +27,11 @@ module "out_of_band_security" {
   naming_prefix = "test-prefix-${random_string.prefix.result}"
   source_image  = "projects/centos-cloud/global/images/centos-stream-8-v20230509"
   scopes        = ["cloud-platform"]
-  additional_disks = { log = {
-    disk_size = 30
-    disk_type = "pd-ssd"
+  additional_disks = {
+    log = {
+      disk_size = 30
+      disk_type = "pd-ssd"
     }
   }
+  health_check_port = 8117
 }

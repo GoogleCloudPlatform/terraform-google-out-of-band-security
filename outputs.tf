@@ -28,3 +28,8 @@ output "instance_template" {
   description = "Name of the instance template."
   value       = google_compute_instance_template.main.name
 }
+
+output "health_check" {
+  description = "name of the health check for the LB backend service"
+  value       = google_compute_health_check.hc.name
+}

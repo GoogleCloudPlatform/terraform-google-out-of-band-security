@@ -28,3 +28,8 @@ output "instance_template" {
   description = "name of the instance template"
   value       = module.out_of_band_security.instance_template
 }
+
+output "health_check" {
+  description = "name of the health check for the LB backend service"
+  value       = module.out_of_band_security.health_check
+}

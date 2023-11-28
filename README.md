@@ -42,6 +42,7 @@ Functional examples are included in the
 | compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
 | cpu\_target | CPU target for autoscaling. | `number` | `0.75` | no |
 | create\_public\_management\_ip | Allow the creation of a public IP address for the management interface of each VM. IP will be ephemeral instead of static. | `bool` | `false` | no |
+| health\_check\_port | Allow overriding of the default port for health check. | `number` | `80` | no |
 | machine\_type | The machine type for the firewall compute instances. | `string` | `"n1-standard-4"` | no |
 | max\_instances | Maximum compute instances in the cluster. | `number` | `3` | no |
 | mgmt\_network | The name of an existing VPC that will be used for the management interface of the deployed firewall VMs. | `string` | `"default"` | no |
@@ -60,6 +61,7 @@ Functional examples are included in the
 | Name | Description |
 |------|-------------|
 | forwarding\_rule | Name of the forwarding rule created for traffic. |
+| health\_check | name of the health check for the LB backend service |
 | instance\_template | Name of the instance template. |
 | mig | Name of managed instance group created. |
 

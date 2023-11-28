@@ -26,4 +26,14 @@ module "out_of_band_security" {
   project_id    = var.project_id
   naming_prefix = "test-prefix-${random_string.prefix.result}"
   source_image  = "projects/centos-cloud/global/images/centos-stream-8-v20230509"
+  compute_instance_metadata = {
+    startup-script = <<EOT
+    #! /bin/bash
+    apt update
+    apt -y install apache2
+    cat <<EOF > /var/www/html/index.html
+    <html><body><p>Linux startup script added directly.</p></body></html>
+    EOF
+    EOT
+  }
 }

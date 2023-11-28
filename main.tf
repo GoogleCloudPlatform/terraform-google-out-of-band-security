@@ -196,7 +196,7 @@ resource "google_compute_health_check" "hc" {
   check_interval_sec = 3
   timeout_sec        = 2
   tcp_health_check {
-    port = "80"
+    port = var.health_check_port
   }
 }
 
