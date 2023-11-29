@@ -118,3 +118,8 @@ variable "additional_disks" {
   description = "Allow the creation of one or more additional persistent disks for the VM instance."
 }
 
+variable "health_check_port" {
+  type        = number
+  default     = 80
+  description = "Allow overriding of the default port for health check."
+}
