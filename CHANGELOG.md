@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.1.3...v0.2.0) (2023-11-29)
+
+
+### Features
+
+* add health check port override ([#12](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/issues/12)) ([c7aeb46](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/commit/c7aeb46717e0e6816f3ef8927bea4eb5a5c9f99b))
+
 ## [0.1.3](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.1.2...v0.1.3) (2023-11-16)
 
 
