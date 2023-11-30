@@ -47,6 +47,7 @@ func TestDefaultVariablesExample(t *testing.T) {
 		assert.Equal(op3.Get("properties.serviceAccounts").Array()[0].Get("email").String(), email, "instance template SA with a default email created")
 		assert.Contains(op3.Get("properties.serviceAccounts").Array()[0].Get("scopes").Array()[0].String(), scope, "instance template with given SA scopes created")
 		assert.Equal(len(op3.Get("properties.disks").Array()), 2, "instance template with additional disk created")
+		assert.Equal(len(op3.Get("properties.networkInterfaces").Array()), 3, "instance template has 3 networks: traffic, mgmt and protected")
 
 		op4 := gcloud.Run(t, fmt.Sprintf("compute health-checks describe %s --project %s", example.GetStringOutput("health_check"), projectID))
 		assert.Contains(op4.Get("tcpHealthCheck.port").String(), "8117", "health check with an overriden tcp port created")

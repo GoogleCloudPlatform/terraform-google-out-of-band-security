@@ -123,3 +123,9 @@ variable "health_check_port" {
   default     = 80
   description = "Allow overriding of the default port for health check."
 }
+
+variable "add_protected_network" {
+  type        = bool
+  default     = false
+  description = "Allow the creation of a protected network interface for the instance template."
+}

@@ -52,6 +52,14 @@ resource "google_compute_instance_template" "main" {
     }
   }
 
+  # A Dynamic disk block that keys off of the add_protected_network variable containing details of each additional needed by the customer.
+  dynamic "network_interface" {
+    for_each = var.add_protected_network == true ? [var.add_protected_network] : []
+    content {
+      network = google_compute_network.protected.name
+    }
+  }
+
   metadata = merge(tomap({
     block-project-ssh-keys = var.block_project_ssh_keys
     serial-port-enable     = true
@@ -228,6 +236,13 @@ resource "google_compute_subnetwork" "traffic" {
   region        = var.region
   network       = google_compute_network.traffic.name
   ip_cidr_range = var.traffic_subnet_cidr
+}
+
+resource "google_compute_network" "protected" {
+  provider                = google
+  name                    = format("%s-protected-%s", var.naming_prefix, var.region)
+  project                 = var.project_id
+  auto_create_subnetworks = true
 }
 
 # -------------------------------------------------------------- #
