@@ -33,5 +33,6 @@ module "out_of_band_security" {
       disk_type = "pd-ssd"
     }
   }
-  health_check_port = 8117
+  health_check_port     = 8117
+  add_protected_network = true
 }

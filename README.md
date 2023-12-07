@@ -37,6 +37,7 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| add\_protected\_network | Allow the creation of a protected network interface for the instance template. | `bool` | `false` | no |
 | additional\_disks | Allow the creation of one or more additional persistent disks for the VM instance. | `map(any)` | `{}` | no |
 | block\_project\_ssh\_keys | Ability for customers to block or allow the use of project-wide ssh keys in their VM. | `bool` | `false` | no |
 | compute\_instance\_metadata | Key/value pairs that are made available within each VM instance. | `map(string)` | `{}` | no |
