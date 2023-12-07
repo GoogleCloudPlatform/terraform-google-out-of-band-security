@@ -239,6 +239,7 @@ resource "google_compute_subnetwork" "traffic" {
 }
 
 resource "google_compute_network" "protected" {
+  for_each                = var.add_protected_network == true ? { protected_network = var.add_protected_network } : {}
   provider                = google
   name                    = format("%s-protected-%s", var.naming_prefix, var.region)
   project                 = var.project_id
