@@ -52,11 +52,11 @@ resource "google_compute_instance_template" "main" {
     }
   }
 
-  # A Dynamic disk block that keys off of the add_protected_network variable containing details of each additional needed by the customer.
+  # A Dynamic network_interface block that keys off of the add_protected_network variable.
   dynamic "network_interface" {
     for_each = var.add_protected_network == true ? [var.add_protected_network] : []
     content {
-      network = google_compute_network.protected.name
+      network = google_compute_network.protected["protected_network"].name
     }
   }
 
