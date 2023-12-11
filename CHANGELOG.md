@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.2.2](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.2.1...v0.2.2) (2023-12-11)
+
+
+### Bug Fixes
+
+* Attach new network interface to instance template for each network interface resource created. Update the description. ([#16](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/issues/16)) ([3f39bba](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/commit/3f39bba96404ca831ac25b69d5bb25a5053f5a8b))
+
 ## [0.2.1](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.2.0...v0.2.1) (2023-12-07)
 
 
