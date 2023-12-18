@@ -21,7 +21,8 @@ resource "random_string" "prefix" {
 }
 
 module "out_of_band_security" {
-  source = "../.."
+  source  = "GoogleCloudPlatform/out-of-band-security/google"
+  version = "~> REPLACE-AFTER-RELEASE"
 
   project_id    = var.project_id
   naming_prefix = "test-prefix-${random_string.prefix.result}"
