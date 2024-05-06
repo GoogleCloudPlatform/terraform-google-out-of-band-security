@@ -21,7 +21,7 @@ Basic usage of this module is as follows:
 ```hcl
 module "out_of_band_security" {
   source  = "terraform-google-modules/out-of-band-security/google"
-  version = "~> 0.4"
+  version = "~> 0.5"
 
   project_id  = "<PROJECT ID>"
   naming_prefix = "example-prefix"
