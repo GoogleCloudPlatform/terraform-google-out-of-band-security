@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 This changelog is generated automatically based on [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/).
 
+## [0.18.0](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.17.0...v0.18.0) (2024-10-30)
+
+
+### Features
+
+* **deps:** Update Terraform Google Provider to &gt;= 3.53, &lt; 6.10 ([#84](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/issues/84)) ([210b236](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/commit/210b236242f0d4cfbaa9fa9816c35d5e2d5da3a6))
+
 ## [0.17.0](https://github.com/GoogleCloudPlatform/terraform-google-out-of-band-security/compare/v0.16.0...v0.17.0) (2024-10-30)
 
 
