@@ -32,7 +32,7 @@ resource "google_compute_subnetwork" "default" {
 
 module "project" {
   source  = "terraform-google-modules/project-factory/google"
-  version = "~> 17.0"
+  version = "~> 18.0"
 
   name              = "out-of-band-security-test"
   random_project_id = "true"
